@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Screening LPDP - Simpul Project Academy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --success: #27ae60;
+            --border: #dcdde1;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #f1f2f6; 
+            padding: 40px 20px;
+            color: var(--primary);
+        }
+
+        .container { 
+            max-width: 850px; 
+            margin: auto; 
+            background: white; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+
+        /* Kop Surat Sempurna */
+        .header { 
+            text-align: center; 
+            border-bottom: 3px solid var(--primary); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            position: relative;
+        }
+        .header h1 { margin: 0; font-size: 20pt; letter-spacing: 1px; }
+        .header p { margin: 3px 0; font-weight: 500; }
+        .header::after {
+            content: "";
+            display: block;
+            border-bottom: 1px solid var(--primary);
+            margin-top: 3px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        .full-width { grid-column: span 2; }
+
+        label { 
+            display: block; 
+            font-size: 11pt;
+            font-weight: 600; 
+            margin-bottom: 6px; 
+            color: #34495e; 
+        }
+
+        input, select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            font-size: 10pt;
+            background-color: #fafafa;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--success);
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(39, 174, 96, 0.2);
+        }
+
+        /* Tanda Tangan */
+        .ttd-container { 
+            margin-top: 60px; 
+            display: flex; 
+            justify-content: space-between;
+            text-align: center;
+        }
+        .ttd-box { width: 250px; }
+        .ttd-space { height: 80px; }
+        .nama-ttd { font-weight: bold; text-decoration: underline; }
+
+        .btn-container { text-align: center; margin-top: 40px; }
+        .btn-download { 
+            background-color: var(--success); 
+            color: white; 
+            padding: 15px 40px; 
+            border: none; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn-download:hover { transform: translateY(-2px); background-color: #219150; }
+
+        .footer-note { 
+            font-size: 10px; 
+            color: #bdc3c7; 
+            margin-top: 40px; 
+            text-align: center; 
+            text-transform: uppercase;
+        }
+
+        /* CSS KHUSUS PDF */
+        .pdf-value { display: none; font-weight: bold; color: #000; border-bottom: 1px dotted #ccc; padding-bottom: 2px; }
+        
+        @media print {
+            .no-print { display: none; }
+            .pdf-value { display: block; }
+            input, select, textarea { display: none; }
+            .container { box-shadow: none; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="document-area">
+    <div class="header">
+        <h1>FORMULIR SCREENING BIMBINGAN LPDP</h1>
+        <p style="font-size: 16pt;">CV. SIMPUL PROJECT ACADEMY</p>
+        <p>Email: admin@simpulproject.com | Tahun Akademik 2026</p>
+    </div>
+
+    <form id="main-form">
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label>Nama Lengkap (Sesuai KTP):</label>
+                <input type="text" id="nama" placeholder="Contoh: Budi Santoso">
+                <div class="pdf-value" id="val-nama"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Domisili & Instansi:</label>
+                <input type="text" id="domisili" placeholder="Contoh: Banda Aceh - USK">
+                <div class="pdf-value" id="val-domisili"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Kategori Beasiswa:</label>
+                <select id="kategori">
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="Reguler">Reguler</option>
+                    <option value="Targeted (PNS/TNI/Polri)">Targeted (PNS/TNI/Polri)</option>
+                    <option value="Afirmasi (Daerah 3T/Prasejahtera)">Afirmasi (Daerah 3T/Prasejahtera)</option>
+                    <option value="Doktor Talenta Riset">Doktor Talenta Riset</option>
+                </select>
+                <div class="pdf-value" id="val-kategori"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Universitas & Jurusan Tujuan:</label>
+                <input type="text" id="tujuan" placeholder="Contoh: Monash University - IT">
+                <div class="pdf-value" id="val-tujuan"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Skor Bahasa (IELTS/TOEFL):</label>
+                <input type="text" id="bahasa" placeholder="Contoh: IELTS 7.5">
+                <div class="pdf-value" id="val-bahasa"></div>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Kendala Terbesar Saat Ini:</label>
+                <textarea id="kendala" rows="2" placeholder="Sebutkan kendala Anda..."></textarea>
+                <div class="pdf-value" id="val-kendala"></div>
+            </div>
+
+            <div class="form-group full-width">
+                <label>Pernyataan Komitmen:</label>
+                <select id="komitmen">
+                    <option value="Saya Bersedia Mengikuti Seluruh Rangkaian Bimbingan Secara Disiplin">Saya Bersedia Mengikuti Seluruh Rangkaian Bimbingan Secara Disiplin</option>
+                    <option value="Tidak Bersedia">Tidak Bersedia</option>
+                </select>
+                <div class="pdf-value" id="val-komitmen"></div>
+            </div>
+        </div>
+
+        <div class="ttd-container">
+            <div class="ttd-box">
+                <p>Calon Peserta,</p>
+                <div class="ttd-space"></div>
+                <p>( <span id="display-nama">...........................</span> )</p>
+            </div>
+            <div class="ttd-box">
+                <p>Mengetahui,<br>Direktur Utama</p>
+                <div class="ttd-space"></div>
+                <p class="nama-ttd">Muhammad Khairul, S.Pd, M.Pd</p>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer-note">
+        Dokumen ini dihasilkan secara sistem oleh Simpul Project Academy Digital System 2026.
+    </div>
+</div>
+
+<div class="btn-container no-print">
+    <button type="button" class="btn-download" onclick="exportKePDF()">DOWNLOAD SEBAGAI PDF</button>
+</div>
+
+<script>
+    function exportKePDF() {
+        const nama = document.getElementById('nama').value;
+        if (!nama) {
+            alert("Harap isi Nama Lengkap terlebih dahulu!");
+            return;
+        }
+
+        // 1. Sinkronisasi Data dari Input ke Tampilan PDF
+        const fields = ['nama', 'domisili', 'kategori', 'tujuan', 'bahasa', 'kendala', 'komitmen'];
+        fields.forEach(field => {
+            document.getElementById('val-' + field).innerText = document.getElementById(field).value;
+        });
+        
+        // Update nama di tanda tangan
+        document.getElementById('display-nama').innerText = nama;
+
+        // 2. Konfigurasi PDF
+        const element = document.getElementById('document-area');
+        const opt = {
+            margin:       [0.5, 0.5],
+            filename:     'Screening_LPDP_Simpul_' + nama.replace(/\s+/g, '_') + '.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 3, logging: false, letterRendering: true },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        // 3. Jalankan Proses Download
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+
+</body>
+</html>
