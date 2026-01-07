@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Screening & Commitment Form - Simpul Project Academy</title>
+    <title>Master Screening LPDP 2026 - Simpul Project Academy</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --spa-main: #003366; /* Biru Tua Profesional */
-            --spa-accent: #0088cc; /* Biru Cerah Semangat */
-            --spa-bg: #f4f7f9;
+            --spa-main: #003366;
+            --spa-accent: #0088cc;
+            --spa-bg: #f8f9fa;
         }
 
         body { 
@@ -22,22 +22,22 @@
         .document-page {
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
+            padding: 15mm 20mm;
             margin: auto;
             background: white;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             box-sizing: border-box;
         }
 
         /* Kop Surat */
         .header-table { width: 100%; border-bottom: 3px solid var(--spa-main); margin-bottom: 20px; }
-        .kop-title { text-align: center; }
-        .kop-title h1 { margin: 0; font-size: 22pt; color: var(--spa-main); letter-spacing: 2px; }
+        .kop-title { text-align: center; border: none !important; }
+        .kop-title h1 { margin: 0; font-size: 20pt; color: var(--spa-main); letter-spacing: 2px; }
         .kop-title p { margin: 2px 0; font-size: 9pt; color: #555; }
 
-        .doc-info { text-align: center; margin-bottom: 25px; }
-        .doc-info h2 { text-decoration: underline; font-size: 14pt; margin-bottom: 5px; }
-        .doc-info p { font-size: 10pt; font-weight: bold; color: var(--spa-accent); }
+        .doc-info { text-align: center; margin-bottom: 20px; }
+        .doc-info h2 { text-decoration: underline; font-size: 13pt; margin-bottom: 5px; text-transform: uppercase; }
+        .doc-info p { font-size: 9pt; font-weight: bold; color: var(--spa-accent); }
 
         /* Section Styling */
         .section-title {
@@ -46,50 +46,49 @@
             padding: 6px 12px;
             font-size: 10pt;
             font-weight: bold;
-            margin: 15px 0 10px 0;
+            margin: 15px 0 8px 0;
             border-radius: 4px;
         }
 
         table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
         td { padding: 8px; font-size: 9pt; vertical-align: top; border: 1px solid #eee; }
-        .label { width: 30%; background-color: #fcfcfc; font-weight: bold; }
+        .label { width: 35%; background-color: #fcfcfc; font-weight: bold; }
         
         input, select, textarea {
-            width: 100%; border: 1px solid #ccc; padding: 6px; font-size: 9pt; box-sizing: border-box; border-radius: 3px;
+            width: 100%; border: 1px solid #ccc; padding: 6px; font-size: 9pt; box-sizing: border-box; border-radius: 3px; font-family: inherit;
         }
 
-        /* Komitmen & Pakta Integritas */
         .commitment-box {
             border: 2px solid var(--spa-main);
             padding: 15px;
             background: #f0f7ff;
-            margin-top: 15px;
+            margin-top: 10px;
         }
-        .commitment-box p { font-size: 9pt; line-height: 1.5; margin: 5px 0; text-align: justify; }
+        .commitment-box p { font-size: 8.5pt; line-height: 1.4; margin: 4px 0; text-align: justify; }
 
         /* Signature Area */
         .footer-sig {
-            margin-top: 40px;
+            margin-top: 30px;
             display: flex;
             justify-content: space-between;
         }
         .sig-item { width: 45%; text-align: center; font-size: 10pt; }
-        .sig-space { height: 70px; border-bottom: 1px solid #ccc; width: 80%; margin: 10px auto; }
+        .sig-space { height: 60px; border-bottom: 1px solid #ccc; width: 80%; margin: 5px auto; }
 
         /* UI */
         .no-print { text-align: center; margin-top: 30px; }
         .btn-submit {
             background: var(--spa-main); color: white; padding: 15px 40px; border: none;
-            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 11pt; transition: 0.3s;
+            border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 11pt; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .btn-submit:hover { background: #002244; transform: translateY(-2px); }
+        .btn-submit:hover { background: #002244; transform: scale(1.02); }
 
-        /* PDF Output */
-        .pdf-text { display: none; font-weight: bold; color: #000; }
+        /* PDF Output Display */
+        .pdf-text { display: none; font-weight: bold; color: #000; border-bottom: 1px dotted #ccc; }
         @media print {
             .no-print { display: none; }
             input, select, textarea { display: none; }
-            .pdf-text { display: block; }
+            .pdf-text { display: block; min-height: 15px; }
             .document-page { box-shadow: none; padding: 10mm; }
         }
     </style>
@@ -97,39 +96,51 @@
 <body>
 
 <div class="document-page" id="document-area">
-    <table class="header-table">
+    <table class="header-table" style="border:none;">
         <tr>
             <td style="border:none;" class="kop-title">
                 <h1>CV. SIMPUL PROJECT ACADEMY</h1>
-                <p>Email: simpul.project.academy@gmail.com | Website: www.simpulacademy.com</p>
-                <p>Banda Aceh, Indonesia - Profesional Scholarship Coaching & Academic Mentoring</p>
+                <p>Email: simpul.project.academy@gmail.com | WhatsApp: +62 822-xxxx-xxxx</p>
+                <p>Banda Aceh, Indonesia - Scholarship Coaching & Academic Mentoring</p>
             </td>
         </tr>
     </table>
 
     <div class="doc-info">
-        <h2>FORMULIR SCREENING & PERNYATAAN KOMITMEN PESERTA</h2>
-        <p>PROGRAM BIMBINGAN INTENSIF LPDP TAHUN AKADEMIK 2026</p>
+        <h2>FORMULIR PENDAFTARAN & ANALISIS KOMITMEN PESERTA</h2>
+        <p>BIMBINGAN INTENSIF LPDP 2026 - REMOTE COACHING SYSTEM</p>
     </div>
 
-    <form id="spa-form">
-        <div class="section-title">I. PROFIL LENGKAP CALON PESERTA</div>
+    <form id="spa-master-form">
+        <div class="section-title">I. BIODATA DIRI & RIWAYAT AKADEMIK</div>
         <table>
             <tr>
-                <td class="label">Nama Lengkap (Sesuai KTP)</td>
+                <td class="label">Nama Lengkap & Gelar</td>
                 <td><input type="text" id="nama" value="Muhammad khairul"><span class="pdf-text" id="p-nama"></span></td>
             </tr>
             <tr>
-                <td class="label">NIK / No. KTP</td>
+                <td class="label">NIK (Nomor Induk Kependudukan)</td>
                 <td><input type="number" id="nik"><span class="pdf-text" id="p-nik"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Tempat, Tanggal Lahir</td>
+                <td><input type="text" id="ttl"><span class="pdf-text" id="p-ttl"></span></td>
             </tr>
             <tr>
                 <td class="label">Domisili & Instansi Asal</td>
                 <td><input type="text" id="domisili" value="banda aceh"><span class="pdf-text" id="p-domisili"></span></td>
             </tr>
             <tr>
-                <td class="label">Pekerjaan Saat Ini</td>
+                <td class="label">Pendidikan Terakhir & IPK</td>
+                <td><input type="text" id="akademik" placeholder="Contoh: S1 Teknik - Universitas Indonesia (IPK 3.80)"><span class="pdf-text" id="p-akademik"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Pekerjaan & Instansi Saat Ini</td>
                 <td><input type="text" id="pekerjaan"><span class="pdf-text" id="p-pekerjaan"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Prestasi / Pengalaman Organisasi</td>
+                <td><textarea id="prestasi" rows="2"></textarea><span class="pdf-text" id="p-prestasi"></span></td>
             </tr>
         </table>
 
@@ -137,57 +148,65 @@
         <table>
             <tr>
                 <td class="label">Nama & Pekerjaan Orang Tua</td>
-                <td><input type="text" id="ortu" placeholder="Contoh: Ayah (PNS), Ibu (RT)"><span class="pdf-text" id="p-ortu"></span></td>
+                <td><input type="text" id="ortu" placeholder="Ayah (Pekerjaan), Ibu (Pekerjaan)"><span class="pdf-text" id="p-ortu"></span></td>
             </tr>
             <tr>
-                <td class="label">Alamat Lengkap Orang Tua</td>
-                <td><textarea id="alamat-ortu" rows="2"></textarea><span class="pdf-text" id="p-alamat-ortu"></span></td>
+                <td class="label">Alamat Orang Tua / Asal</td>
+                <td><input type="text" id="alamat_ortu"><span class="pdf-text" id="p-alamat_ortu"></span></td>
             </tr>
             <tr>
-                <td class="label">Penghasilan Per Bulan</td>
+                <td class="label">Kondisi Ekonomi Bulanan</td>
                 <td>
                     <select id="ekonomi">
-                        <option value="Pra-Sejahtera (< 2 Juta)">Pra-Sejahtera (< 2 Juta)</option>
-                        <option value="Menengah (2 - 7 Juta)">Menengah (2 - 7 Juta)</option>
-                        <option value="Mapan (> 7 Juta)">Mapan (> 7 Juta)</option>
+                        <option value="Pra-Sejahtera">Pra-Sejahtera</option>
+                        <option value="Menengah">Menengah</option>
+                        <option value="Mapan">Mapan</option>
                     </select>
                     <span class="pdf-text" id="p-ekonomi"></span>
                 </td>
             </tr>
         </table>
 
-        <div class="section-title">III. RENCANA STUDI & KESIAPAN TEKNIS</div>
+        <div class="section-title">III. RENCANA STUDI & ANALISIS KESIAPAN</div>
         <table>
             <tr>
                 <td class="label">Kategori Beasiswa LPDP</td>
                 <td><input type="text" id="kategori" value="Reguler"><span class="pdf-text" id="p-kategori"></span></td>
             </tr>
             <tr>
-                <td class="label">Target Kampus & Jurusan</td>
+                <td class="label">Kampus & Jurusan Tujuan</td>
                 <td><input type="text" id="target"><span class="pdf-text" id="p-target"></span></td>
             </tr>
             <tr>
-                <td class="label">Kesiapan Perangkat (Remote)</td>
+                <td class="label">Skor Bahasa Terakhir (IELTS/TOEFL)</td>
+                <td><input type="text" id="bahasa"><span class="pdf-text" id="p-bahasa"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Kelemahan Terbesar (Self-Analysis)</td>
+                <td><textarea id="lemah" rows="2" placeholder="Apa kendala Anda dalam mendaftar beasiswa ini?"></textarea><span class="pdf-text" id="p-lemah"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Kesiapan Perangkat & Internet</td>
                 <td>
-                    <select id="perangkat">
-                        <option value="Sangat Siap (Laptop & Internet Stabil)">Sangat Siap (Laptop & Internet Stabil)</option>
+                    <select id="teknis">
+                        <option value="Sangat Siap (Laptop & Wifi)">Sangat Siap (Laptop & Wifi)</option>
                         <option value="Cukup (Hanya Smartphone)">Cukup (Hanya Smartphone)</option>
                     </select>
-                    <span class="pdf-text" id="p-perangkat"></span>
+                    <span class="pdf-text" id="p-teknis"></span>
                 </td>
             </tr>
         </table>
 
-        <div class="section-title">IV. PAKTA INTEGRITAS & KOMITMEN COACHING</div>
+        <div class="section-title">IV. PAKTA INTEGRITAS & PERNYATAAN KOMITMEN</div>
         <div class="commitment-box">
-            <p><strong>Dengan mengisi formulir ini, saya menyatakan:</strong></p>
-            <p>1. Bersedia mengikuti seluruh rangkaian coaching yang diselenggarakan oleh <b>CV. Simpul Project Academy</b> secara disiplin dan tepat waktu.</p>
-            <p>2. Berkomitmen menyelesaikan seluruh tugas (assignment) yang diberikan oleh Coach sesuai dengan deadline yang ditentukan.</p>
-            <p>3. Menjaga kerahasiaan materi bimbingan dan tidak menyebarluaskannya tanpa izin tertulis dari pihak akademi.</p>
-            <p>4. Memahami bahwa keberhasilan seleksi bergantung pada usaha pribadi, dan saya siap memberikan upaya maksimal 100%.</p>
-            <p>
+            <p><strong>Dengan menandatangani dokumen ini, saya berkomitmen:</strong></p>
+            <p>1. Bersedia mengikuti seluruh rangkaian program bimbingan <b>Simpul Project Academy</b> secara totalitas dan disiplin.</p>
+            <p>2. Menghargai waktu Coach dengan hadir tepat waktu pada sesi bimbingan jarak jauh dan mengumpulkan tugas sesuai jadwal.</p>
+            <p>3. Tidak akan menyalahgunakan atau menyebarluaskan materi bimbingan kepada pihak manapun tanpa izin tertulis.</p>
+            <p>4. Alokasi waktu belajar mandiri minimal 3 jam per hari di luar jam bimbingan resmi.</p>
+            <p style="margin-top:10px;">
                 <input type="checkbox" id="setuju" style="width: auto;"> 
-                <label style="display:inline; font-weight:normal;"><b>SAYA MENYATAKAN SETUJU DAN BERKOMITMEN PENUH.</b></label>
+                <label style="display:inline; font-weight:bold;">SAYA MENYATAKAN SETUJU DAN BERSEDIA MENGIKUTI SELURUH KETENTUAN DI ATAS.</label>
             </p>
         </div>
 
@@ -195,7 +214,7 @@
             <div class="sig-item">
                 <p>Hormat Saya, <br>Calon Peserta</p>
                 <div class="sig-space"></div>
-                <p>( <span id="sign-nama">...........................</span> )</p>
+                <p>( <span id="out-nama">...........................</span> )</p>
             </div>
             <div class="sig-item">
                 <p>Banda Aceh, 07 Januari 2026<br>Direktur Utama SPA</p>
@@ -207,29 +226,30 @@
 </div>
 
 <div class="no-print">
-    <button type="button" class="btn-submit" onclick="processPDF()">DOWNLOAD PDF & NYATAKAN KOMITMEN 🚀</button>
+    <button type="button" class="btn-submit" onclick="generatePDF()">VALIDASI DATA & DOWNLOAD PDF 🚀</button>
 </div>
 
 <script>
-    function processPDF() {
+    function generatePDF() {
         if(!document.getElementById('setuju').checked) {
-            alert("Harap centang kotak persetujuan komitmen terlebih dahulu!");
+            alert("Harap centang konfirmasi komitmen terlebih dahulu!");
             return;
         }
 
-        const ids = ['nama', 'nik', 'domisili', 'pekerjaan', 'ortu', 'alamat-ortu', 'ekonomi', 'kategori', 'target', 'perangkat'];
+        const ids = ['nama', 'nik', 'ttl', 'domisili', 'akademik', 'pekerjaan', 'prestasi', 'ortu', 'alamat_ortu', 'ekonomi', 'kategori', 'target', 'bahasa', 'lemah', 'teknis'];
+        
         ids.forEach(id => {
             const val = document.getElementById(id).value;
             document.getElementById('p-' + id).innerText = val || '-';
         });
 
         const nama = document.getElementById('nama').value;
-        document.getElementById('sign-nama').innerText = nama || '...........................';
+        document.getElementById('out-nama').innerText = nama || '...........................';
 
         const element = document.getElementById('document-area');
         const opt = {
             margin:       [0.2, 0.2],
-            filename:     'KOMITMEN_SPA_' + (nama.replace(/\s+/g, '_')) + '.pdf',
+            filename:     'Registration_SPA_' + (nama.replace(/\s+/g, '_')) + '.pdf',
             image:        { type: 'jpeg', quality: 1 },
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
@@ -241,4 +261,3 @@
 
 </body>
 </html>
-
