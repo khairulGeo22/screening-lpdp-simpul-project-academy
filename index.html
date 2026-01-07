@@ -3,231 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Screening Form - Simpul Project Academy</title>
+    <title>Master Screening & Commitment Form - Simpul Project Academy</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --spa-blue: #1a5276;
-            --spa-gold: #b7950b;
-            --text-main: #212529;
-            --bg-soft: #f8f9fa;
+            --spa-main: #003366; /* Biru Tua Profesional */
+            --spa-accent: #0088cc; /* Biru Cerah Semangat */
+            --spa-bg: #f4f7f9;
         }
 
         body { 
-            font-family: 'Times New Roman', Times, serif; 
-            background-color: #e9ecef; 
-            margin: 0; 
+            font-family: 'Arial', sans-serif; 
+            background-color: var(--spa-bg); 
             padding: 40px 10px;
-            color: var(--text-main);
+            color: #333;
         }
 
         .document-page {
             width: 210mm;
             min-height: 297mm;
-            padding: 25mm;
+            padding: 20mm;
             margin: auto;
             background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             box-sizing: border-box;
-            position: relative;
         }
 
-        /* Kop Surat Resmi */
-        .kop-header {
-            display: flex;
-            align-items: center;
-            border-bottom: 4px solid var(--spa-blue);
-            padding-bottom: 10px;
-            margin-bottom: 2px;
-        }
-        .kop-text { text-align: center; width: 100%; }
-        .kop-text h1 { margin: 0; font-size: 20pt; color: var(--spa-blue); text-transform: uppercase; }
-        .kop-text p { margin: 2px 0; font-size: 9pt; font-style: italic; }
-        .kop-line { border-bottom: 1px solid var(--spa-blue); margin-bottom: 25px; }
+        /* Kop Surat */
+        .header-table { width: 100%; border-bottom: 3px solid var(--spa-main); margin-bottom: 20px; }
+        .kop-title { text-align: center; }
+        .kop-title h1 { margin: 0; font-size: 22pt; color: var(--spa-main); letter-spacing: 2px; }
+        .kop-title p { margin: 2px 0; font-size: 9pt; color: #555; }
 
-        .doc-title { text-align: center; margin-bottom: 30px; }
-        .doc-title h2 { text-decoration: underline; margin-bottom: 5px; font-size: 14pt; }
-        .doc-title p { margin: 0; font-size: 10pt; font-weight: bold; }
+        .doc-info { text-align: center; margin-bottom: 25px; }
+        .doc-info h2 { text-decoration: underline; font-size: 14pt; margin-bottom: 5px; }
+        .doc-info p { font-size: 10pt; font-weight: bold; color: var(--spa-accent); }
 
-        /* Form Styling */
-        .section-header {
-            background-color: #f2f2f2;
-            padding: 5px 10px;
+        /* Section Styling */
+        .section-title {
+            background: var(--spa-main);
+            color: white;
+            padding: 6px 12px;
+            font-size: 10pt;
             font-weight: bold;
-            font-size: 11pt;
-            border-left: 4px solid var(--spa-blue);
             margin: 15px 0 10px 0;
+            border-radius: 4px;
         }
 
         table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        td { padding: 6px; font-size: 10pt; vertical-align: top; }
-        .label { width: 35%; }
-        .colon { width: 3%; }
+        td { padding: 8px; font-size: 9pt; vertical-align: top; border: 1px solid #eee; }
+        .label { width: 30%; background-color: #fcfcfc; font-weight: bold; }
         
         input, select, textarea {
-            width: 100%;
-            border: 1px solid #ccc;
-            padding: 5px;
-            font-family: Arial, sans-serif;
-            font-size: 9pt;
-            box-sizing: border-box;
+            width: 100%; border: 1px solid #ccc; padding: 6px; font-size: 9pt; box-sizing: border-box; border-radius: 3px;
         }
 
-        /* Tanda Tangan */
-        .sig-container {
-            margin-top: 50px;
-            width: 100%;
+        /* Komitmen & Pakta Integritas */
+        .commitment-box {
+            border: 2px solid var(--spa-main);
+            padding: 15px;
+            background: #f0f7ff;
+            margin-top: 15px;
+        }
+        .commitment-box p { font-size: 9pt; line-height: 1.5; margin: 5px 0; text-align: justify; }
+
+        /* Signature Area */
+        .footer-sig {
+            margin-top: 40px;
             display: flex;
             justify-content: space-between;
         }
-        .sig-box { width: 200px; text-align: center; font-size: 10pt; }
-        .sig-space { height: 75px; }
+        .sig-item { width: 45%; text-align: center; font-size: 10pt; }
+        .sig-space { height: 70px; border-bottom: 1px solid #ccc; width: 80%; margin: 10px auto; }
 
-        /* UI Buttons */
-        .no-print-area { text-align: center; margin-top: 30px; }
-        .btn-print {
-            background: var(--spa-blue);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
+        /* UI */
+        .no-print { text-align: center; margin-top: 30px; }
+        .btn-submit {
+            background: var(--spa-main); color: white; padding: 15px 40px; border: none;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 11pt; transition: 0.3s;
         }
+        .btn-submit:hover { background: #002244; transform: translateY(-2px); }
 
-        /* PDF Render Adjustments */
-        .val-text { display: none; font-weight: bold; }
+        /* PDF Output */
+        .pdf-text { display: none; font-weight: bold; color: #000; }
         @media print {
-            .no-print-area { display: none; }
+            .no-print { display: none; }
             input, select, textarea { display: none; }
-            .val-text { display: inline-block; border-bottom: 1px dotted #000; width: 100%; }
+            .pdf-text { display: block; }
+            .document-page { box-shadow: none; padding: 10mm; }
         }
     </style>
 </head>
 <body>
 
-<div class="document-page" id="printable-doc">
-    <div class="kop-header">
-        <div class="kop-text">
-            <h1>CV. SIMPUL PROJECT ACADEMY</h1>
-            <p>Email: admin@simpulproject.com | Tahun Akademik 2026</p>
-            <p>Layanan Bimbingan Beasiswa & Pelatihan Akademik Profesional</p>
-        </div>
-    </div>
-    <div class="kop-line"></div>
+<div class="document-page" id="document-area">
+    <table class="header-table">
+        <tr>
+            <td style="border:none;" class="kop-title">
+                <h1>CV. SIMPUL PROJECT ACADEMY</h1>
+                <p>Email: simpul.project.academy@gmail.com | Website: www.simpulproject.com</p>
+                <p>Banda Aceh, Indonesia - Profesional Scholarship Coaching & Academic Mentoring</p>
+            </td>
+        </tr>
+    </table>
 
-    <div class="doc-title">
-        <h2>FORMULIR SCREENING PESERTA BIMBINGAN LPDP</h2>
-        <p>NOMOR: SPA/LPDP/2026/____</p>
+    <div class="doc-info">
+        <h2>FORMULIR SCREENING & PERNYATAAN KOMITMEN PESERTA</h2>
+        <p>PROGRAM BIMBINGAN INTENSIF LPDP TAHUN AKADEMIK 2026</p>
     </div>
 
-    <form id="form-spa">
-        <div class="section-header">A. IDENTITAS PRIBADI</div>
+    <form id="spa-form">
+        <div class="section-title">I. PROFIL LENGKAP CALON PESERTA</div>
         <table>
             <tr>
-                <td class="label">Nama Lengkap</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="nama" placeholder="Sesuai KTP" value="Muhammad khairul"> <span class="val-text" id="v-nama"></span>
-                </td>
+                <td class="label">Nama Lengkap (Sesuai KTP)</td>
+                <td><input type="text" id="nama" value="Muhammad khairul"><span class="pdf-text" id="p-nama"></span></td>
             </tr>
             <tr>
-                <td class="label">Nomor WhatsApp / ID Telegram</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="kontak">
-                    <span class="val-text" id="v-kontak"></span>
-                </td>
+                <td class="label">NIK / No. KTP</td>
+                <td><input type="number" id="nik"><span class="pdf-text" id="p-nik"></span></td>
             </tr>
             <tr>
-                <td class="label">Domisili Saat Ini</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="domisili" value="banda aceh"> <span class="val-text" id="v-domisili"></span>
-                </td>
+                <td class="label">Domisili & Instansi Asal</td>
+                <td><input type="text" id="domisili" value="banda aceh"><span class="pdf-text" id="p-domisili"></span></td>
+            </tr>
+            <tr>
+                <td class="label">Pekerjaan Saat Ini</td>
+                <td><input type="text" id="pekerjaan"><span class="pdf-text" id="p-pekerjaan"></span></td>
             </tr>
         </table>
 
-        <div class="section-header">B. DATA KELUARGA & EKONOMI</div>
+        <div class="section-title">II. LATAR BELAKANG KELUARGA & EKONOMI</div>
         <table>
             <tr>
-                <td class="label">Pekerjaan Ayah / Ibu</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="ortu">
-                    <span class="val-text" id="v-ortu"></span>
-                </td>
+                <td class="label">Nama & Pekerjaan Orang Tua</td>
+                <td><input type="text" id="ortu" placeholder="Contoh: Ayah (PNS), Ibu (RT)"><span class="pdf-text" id="p-ortu"></span></td>
             </tr>
             <tr>
                 <td class="label">Alamat Lengkap Orang Tua</td>
-                <td class="colon">:</td>
-                <td>
-                    <textarea id="alamat-ortu" rows="2"></textarea>
-                    <span class="val-text" id="v-alamat-ortu"></span>
-                </td>
+                <td><textarea id="alamat-ortu" rows="2"></textarea><span class="pdf-text" id="p-alamat-ortu"></span></td>
             </tr>
             <tr>
-                <td class="label">Penghasilan Kolektif Bulanan</td>
-                <td class="colon">:</td>
+                <td class="label">Penghasilan Per Bulan</td>
                 <td>
-                    <select id="gaji">
-                        <option value="Dibawah Rp 3.000.000">Dibawah Rp 3.000.000</option>
-                        <option value="Rp 3.000.000 - Rp 7.000.000">Rp 3.000.000 - Rp 7.000.000</option>
-                        <option value="Diatas Rp 7.000.000">Diatas Rp 7.000.000</option>
+                    <select id="ekonomi">
+                        <option value="Pra-Sejahtera (< 2 Juta)">Pra-Sejahtera (< 2 Juta)</option>
+                        <option value="Menengah (2 - 7 Juta)">Menengah (2 - 7 Juta)</option>
+                        <option value="Mapan (> 7 Juta)">Mapan (> 7 Juta)</option>
                     </select>
-                    <span class="val-text" id="v-gaji"></span>
+                    <span class="pdf-text" id="p-ekonomi"></span>
                 </td>
             </tr>
         </table>
 
-        <div class="section-header">C. TARGET AKADEMIK & KESIAPAN REMOTE</div>
+        <div class="section-title">III. RENCANA STUDI & KESIAPAN TEKNIS</div>
         <table>
             <tr>
                 <td class="label">Kategori Beasiswa LPDP</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="kategori" value="Reguler"> <span class="val-text" id="v-kategori"></span>
-                </td>
+                <td><input type="text" id="kategori" value="Reguler"><span class="pdf-text" id="p-kategori"></span></td>
             </tr>
             <tr>
-                <td class="label">Kampus & Jurusan Tujuan</td>
-                <td class="colon">:</td>
-                <td>
-                    <input type="text" id="tujuan">
-                    <span class="val-text" id="v-tujuan"></span>
-                </td>
+                <td class="label">Target Kampus & Jurusan</td>
+                <td><input type="text" id="target"><span class="pdf-text" id="p-target"></span></td>
             </tr>
             <tr>
-                <td class="label">Skor Sertifikat Bahasa</td>
-                <td class="colon">:</td>
+                <td class="label">Kesiapan Perangkat (Remote)</td>
                 <td>
-                    <input type="text" id="bahasa" placeholder="IELTS/TOEFL">
-                    <span class="val-text" id="v-bahasa"></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Ketersediaan Perangkat & Koneksi</td>
-                <td class="colon">:</td>
-                <td>
-                    <select id="remote">
-                        <option value="Sangat Siap (Laptop & Wifi)">Sangat Siap (Laptop & Wifi)</option>
-                        <option value="Cukup (Smartphone & Data)">Cukup (Smartphone & Data)</option>
+                    <select id="perangkat">
+                        <option value="Sangat Siap (Laptop & Internet Stabil)">Sangat Siap (Laptop & Internet Stabil)</option>
+                        <option value="Cukup (Hanya Smartphone)">Cukup (Hanya Smartphone)</option>
                     </select>
-                    <span class="val-text" id="v-remote"></span>
+                    <span class="pdf-text" id="p-perangkat"></span>
                 </td>
             </tr>
         </table>
 
-        <div class="sig-container">
-            <div class="sig-box">
-                <p>Calon Peserta,</p>
+        <div class="section-title">IV. PAKTA INTEGRITAS & KOMITMEN COACHING</div>
+        <div class="commitment-box">
+            <p><strong>Dengan mengisi formulir ini, saya menyatakan:</strong></p>
+            <p>1. Bersedia mengikuti seluruh rangkaian coaching yang diselenggarakan oleh <b>CV. Simpul Project Academy</b> secara disiplin dan tepat waktu.</p>
+            <p>2. Berkomitmen menyelesaikan seluruh tugas (assignment) yang diberikan oleh Coach sesuai dengan deadline yang ditentukan.</p>
+            <p>3. Menjaga kerahasiaan materi bimbingan dan tidak menyebarluaskannya tanpa izin tertulis dari pihak akademi.</p>
+            <p>4. Memahami bahwa keberhasilan seleksi bergantung pada usaha pribadi, dan saya siap memberikan upaya maksimal 100%.</p>
+            <p>
+                <input type="checkbox" id="setuju" style="width: auto;"> 
+                <label style="display:inline; font-weight:normal;"><b>SAYA MENYATAKAN SETUJU DAN BERKOMITMEN PENUH.</b></label>
+            </p>
+        </div>
+
+        <div class="footer-sig">
+            <div class="sig-item">
+                <p>Hormat Saya, <br>Calon Peserta</p>
                 <div class="sig-space"></div>
-                <p>( <span id="out-nama">...........................</span> )</p>
+                <p>( <span id="sign-nama">...........................</span> )</p>
             </div>
-            <div class="sig-box">
-                <p>Banda Aceh, 07 Januari 2026</p>
-                <p>Direktur Utama,</p>
+            <div class="sig-item">
+                <p>Banda Aceh, 07 Januari 2026<br>Direktur Utama SPA</p>
                 <div class="sig-space"></div>
                 <p><strong>Muhammad Khairul, S.Pd, M.Pd</strong></p>
             </div>
@@ -235,12 +206,38 @@
     </form>
 </div>
 
-<div class="no-print-area">
-    <button class="btn-print" onclick="generateProfessionalPDF()">VALIDASI & GENERATE PDF RESMI</button>
+<div class="no-print">
+    <button type="button" class="btn-submit" onclick="processPDF()">DOWNLOAD PDF & NYATAKAN KOMITMEN 🚀</button>
 </div>
 
 <script>
-    function generateProfessionalPDF() {
-        const fields = ['nama', 'kontak', 'domisili', 'ortu', 'alamat-ortu', 'gaji', 'kategori', 'tujuan', 'bahasa', 'remote'];
-        
-        fields.forEach(id => {
+    function processPDF() {
+        if(!document.getElementById('setuju').checked) {
+            alert("Harap centang kotak persetujuan komitmen terlebih dahulu!");
+            return;
+        }
+
+        const ids = ['nama', 'nik', 'domisili', 'pekerjaan', 'ortu', 'alamat-ortu', 'ekonomi', 'kategori', 'target', 'perangkat'];
+        ids.forEach(id => {
+            const val = document.getElementById(id).value;
+            document.getElementById('p-' + id).innerText = val || '-';
+        });
+
+        const nama = document.getElementById('nama').value;
+        document.getElementById('sign-nama').innerText = nama || '...........................';
+
+        const element = document.getElementById('document-area');
+        const opt = {
+            margin:       [0.2, 0.2],
+            filename:     'KOMITMEN_SPA_' + (nama.replace(/\s+/g, '_')) + '.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+
+</body>
+</html>
